@@ -3,15 +3,15 @@ import { typeDefs, resolvers } from 'graphql/types';
 import generateLoaders from 'graphql/loaders';
 import jwt from 'jsonwebtoken';
 import express from 'express';
-import User from 'models/user.model';
+import Admin from 'models/admin.model';
 const secret = process.env.SECRET || '';
 
-const getUserFromCookie = (req: express.Request, res: express.Response) => {
+const getAdminFromCookie = (req: express.Request, res: express.Response) => {
 	const token = req.cookies?.user;
 
 	if (token) {
 		try {
-			return jwt.verify(token, secret) as User;
+			return jwt.verify(token, secret) as Admin;
 		} catch (error) {
 			res.cookie('user', {}, { expires: new Date(0) });
 			return null;
@@ -24,7 +24,7 @@ const getUserFromCookie = (req: express.Request, res: express.Response) => {
 
 const generateContext = (req: express.Request, res: express.Response) => ({
 	...generateLoaders(),
-	user: getUserFromCookie(req, res),
+	admin: getAdminFromCookie(req, res),
 	res,
 	req
 });
