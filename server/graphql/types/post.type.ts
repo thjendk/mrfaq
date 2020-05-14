@@ -25,6 +25,9 @@ export const postTypeDefs = gql`
 		text: String
 		tags: [Tag]
 		comments: [Comment]
+		admin: Admin
+		createdAt: String
+		updatedAt: String
 	}
 
 	input PostInput {
@@ -95,6 +98,18 @@ export const postResolvers: Resolvers = {
 		comments: async ({ id }) => {
 			const comments = await Comment.query().where({ postId: id });
 			return comments.map((c) => ({ id: c.commentId }));
+		},
+		admin: async ({ id }, args, ctx) => {
+			const post = await ctx.postLoader.load(id);
+			return { id: post.adminId };
+		},
+		createdAt: async ({ id }, args, ctx) => {
+			const post = await ctx.postLoader.load(id);
+			return post.createdAt?.toISOString();
+		},
+		updatedAt: async ({ id }, args, ctx) => {
+			const post = await ctx.postLoader.load(id);
+			return post.updatedAt?.toISOString();
 		}
 	}
 };

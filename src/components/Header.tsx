@@ -6,7 +6,7 @@ const StyledHeader = styled.header`
 	margin: 0;
 	padding: 5px;
 	text-align: center;
-	background-color: #455eff;
+	background-color: darkolivegreen;
 	color: white;
 `;
 

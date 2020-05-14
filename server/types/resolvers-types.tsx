@@ -138,6 +138,9 @@ export type Post = {
   text?: Maybe<Scalars['String']>;
   tags?: Maybe<Array<Maybe<Tag>>>;
   comments?: Maybe<Array<Maybe<Comment>>>;
+  admin?: Maybe<Admin>;
+  createdAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['String']>;
 };
 
 export type PostInput = {
@@ -331,6 +334,9 @@ export type PostResolvers<ContextType = Context, ParentType extends ResolversPar
   text?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tag']>>>, ParentType, ContextType>,
   comments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Comment']>>>, ParentType, ContextType>,
+  admin?: Resolver<Maybe<ResolversTypes['Admin']>, ParentType, ContextType>,
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 

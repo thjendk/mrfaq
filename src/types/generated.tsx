@@ -136,6 +136,9 @@ export type Post = {
   text?: Maybe<Scalars['String']>;
   tags?: Maybe<Array<Maybe<Tag>>>;
   comments?: Maybe<Array<Maybe<Comment>>>;
+  admin?: Maybe<Admin>;
+  createdAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['String']>;
 };
 
 export type PostInput = {
