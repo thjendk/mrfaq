@@ -47,8 +47,9 @@ export const adminResolvers: Resolvers = {
 	Mutation: {
 		login: async (root, { data: { username, password } }, ctx) => {
 			const admin = await Admin.query().findOne({ username });
+			if (!admin) throw new Error('Incorrect password or username');
 			const isValid = admin.verify(password);
-			if (!isValid) throw new Error('Wrong password or username');
+			if (!isValid) throw new Error('Incorrect password or username');
 			await admin.$query().update({ lastLogin: new Date() });
 			const token = admin.signToken();
 			ctx.res.cookie('user', token, { expires: new Date(253402300000000) });

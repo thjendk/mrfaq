@@ -170,11 +170,13 @@ export type Tag = {
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   color?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
 };
 
 export type TagInput = {
   name?: Maybe<Scalars['String']>;
   color?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
 };
 
 

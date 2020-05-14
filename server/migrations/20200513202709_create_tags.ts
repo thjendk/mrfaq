@@ -3,8 +3,9 @@ import * as Knex from 'knex';
 export async function up(knex: Knex): Promise<any> {
 	return knex.schema.createTable('tags', (t) => {
 		t.increments('tag_id');
-		t.string('name').notNullable();
-		t.string('color').notNullable();
+		t.string('name').unique().notNullable();
+		t.string('color').unique().notNullable();
+		t.string('description');
 	});
 }
 

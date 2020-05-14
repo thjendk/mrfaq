@@ -1,23 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Post, Admin } from 'types/generated';
+import { Post, Admin, Tag } from 'types/generated';
 import { insertOrReplace } from '../utils';
 
 const initialState = {
 	posts: [] as Post[],
-	admin: null as Admin
+	admin: null as Admin,
+	tags: [] as Tag[]
 };
 
 const combinedReducer = createSlice({
 	name: 'combined',
 	initialState,
 	reducers: {
-		addPosts: (state, action: PayloadAction<Post[]>) => {
-			for (let post of action.payload) {
-				insertOrReplace(state.posts, post);
-			}
+		addPosts: (state, action: PayloadAction<Post | Post[]>) => {
+			insertOrReplace(state.posts, action.payload);
 		},
 		setAdmin: (state, action: PayloadAction<Admin>) => {
 			state.admin = action.payload;
+		},
+		addTags: (state, action: PayloadAction<Tag | Tag[]>) => {
+			insertOrReplace(state.tags, action.payload);
 		}
 	}
 });

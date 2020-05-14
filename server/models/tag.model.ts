@@ -4,6 +4,7 @@ interface Tag {
 	tagId: number;
 	name: string;
 	color: string;
+	description: string;
 }
 
 class Tag extends Model {

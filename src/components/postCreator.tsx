@@ -1,48 +1,28 @@
-import React, { useState } from 'react';
-import PostComponent from './Post';
-import { Card, Accordion, InputGroup, Button, Form } from 'react-bootstrap';
-import { Divider } from './Posts';
+import React from 'react';
+import { Card, Accordion, Button } from 'react-bootstrap';
+import Post from 'classes/Post.class';
+import PostForm from './PostForm';
+import { PostInput } from 'types/generated';
 
-export interface PostCreatorProps {}
+export interface PostCreatorProps {
+	post?: Post;
+}
 
 const PostCreator: React.SFC<PostCreatorProps> = () => {
-	const [title, setTitle] = useState('');
-	const [text, setText] = useState('');
+	const handleSubmit = async (data: PostInput) => {
+		await Post.create(data);
+	};
 
 	return (
 		<Card>
 			<Card.Header style={{ textAlign: 'center' }}>
-				<Accordion.Toggle as={Button} variant="outline-secondary" style={{ width: '100%' }} eventKey="new">
-					Opret nyt spørgsmål
+				<Accordion.Toggle as={Button} variant="outline-secondary" block eventKey="new">
+					Opret nyt opslag
 				</Accordion.Toggle>
 			</Card.Header>
 			<Accordion.Collapse eventKey="new">
 				<Card.Body>
-					<Form>
-						<Form.Control
-							type="text"
-							onChange={(e) => setTitle(e.target.value)}
-							value={title}
-							placeholder="Titel"
-						/>
-						<Divider />
-						<Form.Control
-							as="textarea"
-							rows={3}
-							onChange={(e) => setText(e.target.value)}
-							value={text}
-							placeholder="Tekst"
-						/>
-						<Divider />
-						<Button variant="secondary">Opret</Button>
-					</Form>
-					<Divider />
-					{title && (
-						<>
-							<h5>Preview</h5>
-							<PostComponent post={{ text, title }} />
-						</>
-					)}
+					<PostForm onSubmit={handleSubmit} />
 				</Card.Body>
 			</Accordion.Collapse>
 		</Card>

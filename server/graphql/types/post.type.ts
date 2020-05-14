@@ -56,7 +56,7 @@ export const postResolvers: Resolvers = {
 	Mutation: {
 		createPost: async (root, { data: { title, text } }, ctx) => {
 			permitAdmin(ctx);
-			const post = await Post.query().insertAndFetch({ title, text });
+			const post = await Post.query().insertAndFetch({ title, text, adminId: ctx.admin.adminId });
 			return { id: post.postId };
 		},
 		editPost: async (root, { id, data: { title, text } }, ctx) => {

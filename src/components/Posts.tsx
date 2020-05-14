@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ReduxState } from 'redux/reducers';
 import PostComponent from './Post';
-import PostCreator from './postCreator';
+import PostCreator from './PostCreator';
 import { Accordion, Form } from 'react-bootstrap';
 import Post from 'classes/Post.class';
 import styled from 'styled-components';
+import TagSearchBar from './TagSearchBar';
 export const SearchContext = React.createContext('');
 
 export const Divider = styled.div`
@@ -21,9 +22,10 @@ const Posts: React.SFC<PostsProps> = () => {
 	const posts = useSelector((state: ReduxState) =>
 		state.combined.posts.filter((p) => {
 			if (
-				p.title.includes(search) ||
-				p.text.includes(search) ||
-				p.comments.map((c) => c.text).some((t) => t.includes(search))
+				p.title.toLowerCase().includes(search.toLowerCase()) ||
+				p.text.toLowerCase().includes(search.toLowerCase()) ||
+				p.comments.map((c) => c.text.toLowerCase()).some((t) => t.includes(search.toLowerCase())) ||
+				p.tags.map((t) => t.name.toLowerCase()).some((t) => t.includes(search.toLowerCase()))
 			) {
 				return true;
 			}
@@ -50,13 +52,17 @@ const Posts: React.SFC<PostsProps> = () => {
 				size="lg"
 			/>
 			<Divider />
+			<SearchContext.Provider value={search}>
+				<TagSearchBar />
+			</SearchContext.Provider>
+			<Divider />
 			<Accordion>
 				<SearchContext.Provider value={search}>
 					{posts.map((p) => (
 						<PostComponent post={p} />
 					))}
 				</SearchContext.Provider>
-				{<PostCreator />}
+				{admin && <PostCreator />}
 			</Accordion>
 		</div>
 	);

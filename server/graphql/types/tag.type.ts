@@ -18,11 +18,13 @@ export const tagTypeDefs = gql`
 		id: Int
 		name: String
 		color: String
+		description: String
 	}
 
 	input TagInput {
 		name: String
 		color: String
+		description: String
 	}
 `;
 
@@ -35,14 +37,14 @@ export const tagResolvers: Resolvers = {
 	},
 
 	Mutation: {
-		createTag: async (root, { data: { name, color } }, ctx) => {
+		createTag: async (root, { data }, ctx) => {
 			permitAdmin(ctx);
-			const tag = await Tag.query().insertAndFetch({ name, color });
+			const tag = await Tag.query().insertAndFetch(data);
 			return { id: tag.tagId };
 		},
-		editTag: async (root, { id, data: { name, color } }, ctx) => {
+		editTag: async (root, { id, data }, ctx) => {
 			permitAdmin(ctx);
-			const tag = await Tag.query().updateAndFetchById(id, { name, color });
+			const tag = await Tag.query().updateAndFetchById(id, data);
 			return { id: tag.tagId };
 		},
 		deleteTag: async (root, { id }, ctx) => {
@@ -61,6 +63,10 @@ export const tagResolvers: Resolvers = {
 		color: async ({ id }, args, ctx) => {
 			const tag = await ctx.tagLoader.load(id);
 			return tag.color;
+		},
+		description: async ({ id }, args, ctx) => {
+			const tag = await ctx.tagLoader.load(id);
+			return tag.description;
 		}
 	}
 };

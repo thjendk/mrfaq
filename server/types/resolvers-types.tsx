@@ -172,11 +172,13 @@ export type Tag = {
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   color?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
 };
 
 export type TagInput = {
   name?: Maybe<Scalars['String']>;
   color?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
 };
 
 
@@ -352,6 +354,7 @@ export type TagResolvers<ContextType = Context, ParentType extends ResolversPare
   id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   color?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
