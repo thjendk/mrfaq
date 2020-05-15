@@ -25,8 +25,8 @@ export const commentTypeDefs = gql`
 
 export const commentResolvers: Resolvers = {
 	Mutation: {
-		createComment: async (root, { data: { text, postId } }) => {
-			await Comment.query().insert({ text, postId });
+		createComment: async (root, { data: { text, postId } }, ctx) => {
+			await Comment.query().insert({ text, postId, adminId: ctx.admin?.adminId });
 			return { id: postId };
 		},
 		deleteComment: async (root, { id }, ctx) => {
@@ -45,15 +45,16 @@ export const commentResolvers: Resolvers = {
 		},
 		admin: async ({ id }, args, ctx) => {
 			const comment = await ctx.commentLoader.load(id);
+			if (!comment.adminId) return null;
 			return { id: comment.adminId };
 		},
 		createdAt: async ({ id }, args, ctx) => {
 			const comment = await ctx.commentLoader.load(id);
-			return comment.createdAt.toISOString();
+			return comment.createdAt?.toISOString();
 		},
 		updatedAt: async ({ id }, args, ctx) => {
 			const comment = await ctx.commentLoader.load(id);
-			return comment.updatedAt.toISOString();
+			return comment.updatedAt?.toISOString();
 		}
 	}
 };

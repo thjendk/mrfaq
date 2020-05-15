@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<any> {
 		t.increments('comment_id');
 		t.text('text').notNullable();
 		t.integer('post_id').unsigned().references('posts.post_id').onUpdate('cascade').onDelete('set null');
-		t.string('admin_id');
+		t.integer('admin_id').unsigned().references('admins.admin_id').onUpdate('cascade').onDelete('set null');
 		t.timestamps(true);
 	});
 }

@@ -25,6 +25,7 @@ class Post {
 				text
 				admin {
 					id
+					fullName
 				}
 				createdAt
 				updatedAt
@@ -102,6 +103,17 @@ class Post {
 
 		const post = await Apollo.mutate('editPost', mutation, { id, data });
 		return store.dispatch(combinedReducer.actions.addPosts(post));
+	};
+
+	static remove = async (id: number) => {
+		const mutation = gql`
+			mutation DeletePost($id: Int) {
+				deletePost(id: $id)
+			}
+		`;
+
+		await Apollo.mutate('deletePost', mutation, { id });
+		return store.dispatch(combinedReducer.actions.removePost(id));
 	};
 }
 

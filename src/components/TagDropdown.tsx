@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tag } from './Post';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import TagClass from 'classes/Tag.class';
 import TagCreator from './TagCreator';
 import Post from 'classes/Post.class';
+import Popup from 'reactjs-popup';
 
 export const TagRow = styled.div`
 	padding: 10px;
@@ -31,6 +32,7 @@ const TagDropdown: React.SFC<TagDropdownProps> = ({ postId }) => {
 	const tags = useSelector((state: ReduxState) =>
 		state.combined.tags.filter((t) => !post.tags.map((t) => t.id).includes(t.id))
 	);
+	const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
 		if (tags.length === 0) {
@@ -40,30 +42,26 @@ const TagDropdown: React.SFC<TagDropdownProps> = ({ postId }) => {
 
 	const handleAddTagToPost = async (tagId: number) => {
 		await Post.addTag({ postId, tagId });
+		setIsOpen(false);
 	};
 
 	return (
-		<OverlayTrigger
-			trigger="click"
-			placement="bottom"
-			overlay={
-				<Popover style={{ width: '300px' }} id="tags-popover">
-					<Popover.Content style={{ padding: 0 }}>
-						{tags.map((t) => (
-							<TagRow onClick={() => handleAddTagToPost(t.id)} color={t.color}>
-								<Tag style={{ width: 'fit-content' }}>{t.name}</Tag>
-								<p style={{ fontSize: '0.8em', margin: 0 }}>{t.description}</p>
-							</TagRow>
-						))}
-						{admin && <TagCreator />}
-					</Popover.Content>
-				</Popover>
-			}
-		>
-			<Tag clickable color="#6c757d">
+		<>
+			<Tag onClick={() => setIsOpen(!isOpen)} clickable color="#6c757d">
 				+ Tilføj
 			</Tag>
-		</OverlayTrigger>
+			<Popup open={isOpen}>
+				<div>
+					{tags.map((t) => (
+						<TagRow onClick={() => handleAddTagToPost(t.id)} color={t.color}>
+							<Tag style={{ width: 'fit-content' }}>{t.name}</Tag>
+							<p style={{ fontSize: '0.8em', margin: 0 }}>{t.description}</p>
+						</TagRow>
+					))}
+					{admin && <TagCreator />}
+				</div>
+			</Popup>
+		</>
 	);
 };
 

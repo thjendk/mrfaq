@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { ReduxState } from 'redux/reducers';
 import PostComponent from './Post';
 import PostCreator from './PostCreator';
-import { Accordion, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import Post from 'classes/Post.class';
 import styled from 'styled-components';
 import TagSearchBar from './TagSearchBar';
@@ -13,6 +13,11 @@ export const Divider = styled.div`
 	height: 5px;
 	margin: 5px auto;
 	width: 100%;
+`;
+
+const PostContainer = styled.div`
+	border: 1px solid lightgrey;
+	border-radius: 5px;
 `;
 
 export interface PostsProps {}
@@ -56,14 +61,14 @@ const Posts: React.SFC<PostsProps> = () => {
 				<TagSearchBar />
 			</SearchContext.Provider>
 			<Divider />
-			<Accordion>
+			<PostContainer>
 				<SearchContext.Provider value={search}>
 					{posts.map((p) => (
 						<PostComponent key={p.id} post={p} />
 					))}
 				</SearchContext.Provider>
 				{admin && <PostCreator />}
-			</Accordion>
+			</PostContainer>
 		</div>
 	);
 };

@@ -20,6 +20,10 @@ const combinedReducer = createSlice({
 		},
 		addTags: (state, action: PayloadAction<Tag | Tag[]>) => {
 			insertOrReplace(state.tags, action.payload);
+		},
+		removePost: (state, action: PayloadAction<number>) => {
+			const index = state.posts.findIndex((p) => p.id === action.payload);
+			state.posts.splice(index, 1);
 		}
 	}
 });
