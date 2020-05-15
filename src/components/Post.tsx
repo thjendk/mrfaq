@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { ReduxState } from 'redux/reducers';
 import PostEditor from './PostEditor';
 import TagDropdown from './TagDropdown';
-import { BsX } from 'react-icons/bs';
+import { BsX, BsChevronDoubleDown, BsChevronDoubleUp } from 'react-icons/bs';
 import Post from 'classes/Post.class';
 
 export interface PostProps {
@@ -44,6 +44,7 @@ const PostComponent: React.SFC<PostProps> = ({ post }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const search = useContext(SearchContext);
 	const admin = useSelector((state: ReduxState) => state.combined.admin);
+	const [isOpen, setIsOpen] = useState(false);
 
 	const handleRemoveTag = async (tagId: number) => {
 		await Post.removeTag({ tagId, postId: post.id });
@@ -54,15 +55,25 @@ const PostComponent: React.SFC<PostProps> = ({ post }) => {
 	return (
 		<Card>
 			<Card.Header>
-				<Accordion.Toggle as={PostTitle} eventKey={post.id.toString()}>
-					<Highlighter search={search}> {post.title}</Highlighter>
+				<Accordion.Toggle
+					key={post.id.toString()}
+					as={PostTitle}
+					onClick={() => setIsOpen(!isOpen)}
+					eventKey={post.id.toString()}
+				>
+					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+						<Highlighter search={search}>{post.title}</Highlighter>
+						{isOpen && <BsChevronDoubleUp style={{ fontSize: '1.2em' }} />}
+						{!isOpen && <BsChevronDoubleDown style={{ color: 'green', fontSize: '1.2em' }} />}
+					</div>
 				</Accordion.Toggle>
 				{(post.tags.length > 0 || admin) && <Divider />}
 				<div style={{ display: 'flex' }}>
 					{post.tags.length > 0 &&
 						post.tags.map((t) => (
 							<Tag color={t.color}>
-								{t.name} <BsX style={{ cursor: 'pointer' }} onClick={() => handleRemoveTag(t.id)} />
+								{t.name}{' '}
+								{admin && <BsX style={{ cursor: 'pointer' }} onClick={() => handleRemoveTag(t.id)} />}
 							</Tag>
 						))}
 					{admin && <TagDropdown postId={post.id} />}

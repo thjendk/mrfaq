@@ -59,7 +59,7 @@ const Posts: React.SFC<PostsProps> = () => {
 			<Accordion>
 				<SearchContext.Provider value={search}>
 					{posts.map((p) => (
-						<PostComponent post={p} />
+						<PostComponent key={p.id} post={p} />
 					))}
 				</SearchContext.Provider>
 				{admin && <PostCreator />}
