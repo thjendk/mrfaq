@@ -14,18 +14,23 @@ const TagCreator: React.SFC<TagCreatorProps> = () => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handleSubmit = async () => {
+		const errorHandler = (error: string) => {
+			setError(error);
+			setIsLoading(false);
+		};
+
 		setIsLoading(true);
 		try {
-			if (!color) return setError('Du mangler at angive en farve');
-			if (!name) return setError('Du mangler at angive et navn');
-			if (!description) return setError('Du mangler at angive en beskrivelse');
+			if (!color) return errorHandler('Du mangler at angive en farve');
+			if (!name) return errorHandler('Du mangler at angive et navn');
+			if (!description) return errorHandler('Du mangler at angive en beskrivelse');
 
 			await Tag.create({ name, description, color });
 			setColor('');
 			setName('');
 			setDescription('');
 		} catch (error) {
-			setError('Der gik noget galt. Prøv igen.');
+			errorHandler('Der gik noget galt. Prøv igen.');
 		}
 
 		setIsLoading(false);
