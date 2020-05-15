@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { ReduxState } from 'redux/reducers';
 
 const StyledHeader = styled.header`
-	width: 100%;
+	display: flex;
 	margin: 0;
 	background-color: darkolivegreen;
 	color: white;
 	justify-content: space-between;
-	display: flex;
 `;
 
 const HeaderItem = styled.div`
@@ -25,11 +26,13 @@ const HeaderItem = styled.div`
 export interface HeaderProps {}
 
 const Header: React.SFC<HeaderProps> = () => {
+	const admin = useSelector((state: ReduxState) => state.combined.admin);
+
 	return (
 		<StyledHeader>
-			<HeaderItem>Tilføj brugere</HeaderItem>
-			<h1 style={{ margin: 0, fontSize: '1.5rem', padding: '5px' }}>Medicinerrådets FAQ</h1>
-			<HeaderItem>Log ud</HeaderItem>
+			{admin && <HeaderItem>Tilføj brugere</HeaderItem>}
+			<h1 style={{ margin: '0 auto', fontSize: '1.5rem', padding: '5px' }}>Medicinerrådets FAQ</h1>
+			{admin && <HeaderItem>Log ud</HeaderItem>}
 		</StyledHeader>
 	);
 };
