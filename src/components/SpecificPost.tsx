@@ -11,7 +11,6 @@ export interface SpecificPostProps {}
 
 const SpecificPost: React.SFC<SpecificPostProps> = () => {
 	const params = useParams<{ postId: string }>();
-	const history = useHistory();
 	const postId = Number(params.postId);
 	const post = useSelector((state: ReduxState) => state.combined.posts.find((p) => p.id === postId));
 
@@ -21,21 +20,8 @@ const SpecificPost: React.SFC<SpecificPostProps> = () => {
 
 	if (!post) return <p>Loading...</p>;
 	return (
-		<div>
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					alignItems: 'center',
-					flexWrap: 'wrap',
-					margin: '5px'
-				}}
-			>
-				<h1>{post.title}</h1>
-				<Button style={{ height: 'fit-content' }} variant="outline-secondary" onClick={() => history.push('/')}>
-					Forside
-				</Button>
-			</div>
+		<div style={{ margin: '5px' }}>
+			<h1>{post.title}</h1>
 			<Divider />
 			<div style={{ border: '1px solid lightgrey' }}>
 				<PostContent post={post} />
