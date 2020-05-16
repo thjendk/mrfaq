@@ -54,7 +54,8 @@ export type Mutation = {
   _empty?: Maybe<Scalars['Boolean']>;
   login?: Maybe<Scalars['String']>;
   logout?: Maybe<Scalars['String']>;
-  createAdmin?: Maybe<Scalars['String']>;
+  createAdmin?: Maybe<Admin>;
+  editAdmin?: Maybe<Admin>;
   createPost?: Maybe<Post>;
   editPost?: Maybe<Post>;
   deletePost?: Maybe<Scalars['String']>;
@@ -74,6 +75,12 @@ export type MutationLoginArgs = {
 
 
 export type MutationCreateAdminArgs = {
+  data?: Maybe<AdminInput>;
+};
+
+
+export type MutationEditAdminArgs = {
+  id?: Maybe<Scalars['Int']>;
   data?: Maybe<AdminInput>;
 };
 
@@ -155,6 +162,7 @@ export type Query = {
    __typename?: 'Query';
   _empty?: Maybe<Scalars['Boolean']>;
   admin?: Maybe<Admin>;
+  admins?: Maybe<Array<Maybe<Admin>>>;
   posts?: Maybe<Array<Maybe<Post>>>;
   post?: Maybe<Post>;
   tags?: Maybe<Array<Maybe<Tag>>>;

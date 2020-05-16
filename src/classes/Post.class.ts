@@ -49,6 +49,20 @@ class Post {
 		return store.dispatch(combinedReducer.actions.addPosts(posts));
 	};
 
+	static findById = async (id: number) => {
+		const query = gql`
+			query Post($id: Int) {
+				post(id: $id) {
+					...Post
+				}
+			}
+			${Post.fragment}
+		`;
+
+		const post = await Apollo.query<Post>('post', query, { id });
+		return store.dispatch(combinedReducer.actions.addPosts(post));
+	};
+
 	static create = async (data: PostInput) => {
 		const mutation = gql`
 			mutation CreatePost($data: PostInput) {

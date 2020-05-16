@@ -56,7 +56,8 @@ export type Mutation = {
   _empty?: Maybe<Scalars['Boolean']>;
   login?: Maybe<Scalars['String']>;
   logout?: Maybe<Scalars['String']>;
-  createAdmin?: Maybe<Scalars['String']>;
+  createAdmin?: Maybe<Admin>;
+  editAdmin?: Maybe<Admin>;
   createPost?: Maybe<Post>;
   editPost?: Maybe<Post>;
   deletePost?: Maybe<Scalars['String']>;
@@ -76,6 +77,12 @@ export type MutationLoginArgs = {
 
 
 export type MutationCreateAdminArgs = {
+  data?: Maybe<AdminInput>;
+};
+
+
+export type MutationEditAdminArgs = {
+  id?: Maybe<Scalars['Int']>;
   data?: Maybe<AdminInput>;
 };
 
@@ -157,6 +164,7 @@ export type Query = {
    __typename?: 'Query';
   _empty?: Maybe<Scalars['Boolean']>;
   admin?: Maybe<Admin>;
+  admins?: Maybe<Array<Maybe<Admin>>>;
   posts?: Maybe<Array<Maybe<Post>>>;
   post?: Maybe<Post>;
   tags?: Maybe<Array<Maybe<Tag>>>;
@@ -317,7 +325,8 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   _empty?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
   login?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationLoginArgs, never>>,
   logout?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  createAdmin?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationCreateAdminArgs, never>>,
+  createAdmin?: Resolver<Maybe<ResolversTypes['Admin']>, ParentType, ContextType, RequireFields<MutationCreateAdminArgs, never>>,
+  editAdmin?: Resolver<Maybe<ResolversTypes['Admin']>, ParentType, ContextType, RequireFields<MutationEditAdminArgs, never>>,
   createPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationCreatePostArgs, never>>,
   editPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationEditPostArgs, never>>,
   deletePost?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeletePostArgs, never>>,
@@ -345,6 +354,7 @@ export type PostResolvers<ContextType = Context, ParentType extends ResolversPar
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   _empty?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
   admin?: Resolver<Maybe<ResolversTypes['Admin']>, ParentType, ContextType>,
+  admins?: Resolver<Maybe<Array<Maybe<ResolversTypes['Admin']>>>, ParentType, ContextType>,
   posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType>,
   post?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryPostArgs, never>>,
   tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tag']>>>, ParentType, ContextType>,

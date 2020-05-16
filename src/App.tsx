@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import Header from 'components/Header';
 import Admin from 'classes/Admin.class';
 import Login from 'components/Login';
+import SpecificPost from 'components/SpecificPost';
+import Admins from 'components/Admins';
+import Logout from 'components/Logout';
 
 const Layout = styled.div`
 	display: flex;
@@ -26,6 +29,9 @@ const App: React.SFC<AppProps> = () => {
 			<Header />
 			<Layout>
 				<Switch>
+					<Route path="/post/:postId" component={SpecificPost} />
+					<Route path="/users" component={Admins} />
+					<Route path="/logout" component={Logout} />
 					<Route path="/login" component={Login} />
 					<Route path="/" component={Posts} />
 				</Switch>

@@ -5,7 +5,8 @@ import { insertOrReplace } from '../utils';
 const initialState = {
 	posts: [] as Post[],
 	admin: null as Admin,
-	tags: [] as Tag[]
+	tags: [] as Tag[],
+	admins: [] as Admin[]
 };
 
 const combinedReducer = createSlice({
@@ -24,6 +25,13 @@ const combinedReducer = createSlice({
 		removePost: (state, action: PayloadAction<number>) => {
 			const index = state.posts.findIndex((p) => p.id === action.payload);
 			state.posts.splice(index, 1);
+		},
+		addAdmins: (state, action: PayloadAction<Admin | Admin[]>) => {
+			insertOrReplace(state.admins, action.payload);
+		},
+		removeAdmin: (state, action: PayloadAction<number>) => {
+			const index = state.admins.findIndex((a) => a.id === action.payload);
+			state.admins.splice(index, 1);
 		}
 	}
 });

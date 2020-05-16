@@ -1,17 +1,14 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import { Post as PostType } from 'types/generated';
-import marked from 'marked';
-import { Button } from 'react-bootstrap';
-import Comments from './Comments';
 import styled from 'styled-components';
 import { SearchContext, Divider } from './Posts';
 import Highlighter from 'react-highlighter';
 import { useSelector } from 'react-redux';
 import { ReduxState } from 'redux/reducers';
-import PostEditor from './PostEditor';
 import TagDropdown from './TagDropdown';
 import { BsX, BsChevronDoubleDown, BsChevronDoubleUp } from 'react-icons/bs';
 import Post from 'classes/Post.class';
+import PostContent from './PostContent';
 
 export interface PostProps {
 	post: PostType;
@@ -19,11 +16,16 @@ export interface PostProps {
 
 const PostTitle = styled.h2`
 	cursor: pointer;
-	font-size: 1.2rem;
+	font-size: 1.2em;
 	width: 100%;
+	margin: 0 auto;
 
 	:hover {
 		font-weight: bold;
+	}
+
+	@media only screen and (max-width: 500px) {
+		font-size: 1em;
 	}
 `;
 
@@ -56,7 +58,6 @@ export const RowHeader = styled.div`
 
 const PostComponent: React.SFC<PostProps> = ({ post }) => {
 	const ref = useRef(null);
-	const [isEditing, setIsEditing] = useState(false);
 	const search = useContext(SearchContext);
 	const admin = useSelector((state: ReduxState) => state.combined.admin);
 	const [isOpen, setIsOpen] = useState(false);
@@ -64,10 +65,6 @@ const PostComponent: React.SFC<PostProps> = ({ post }) => {
 
 	const handleRemoveTag = async (tagId: number) => {
 		await Post.removeTag({ tagId, postId: post.id });
-	};
-
-	const handleDeletePost = async () => {
-		await Post.remove(post.id);
 	};
 
 	useEffect(() => {
@@ -100,34 +97,7 @@ const PostComponent: React.SFC<PostProps> = ({ post }) => {
 				ref={ref}
 				style={isOpen ? { maxHeight: scrollHeight, borderBottom: '1px solid lightgrey' } : { maxHeight: 0 }}
 			>
-				<div style={{ padding: '15px' }}>
-					{isEditing && <PostEditor post={post} onCancel={() => setIsEditing(false)} />}
-					{!isEditing && (
-						<div>
-							<div
-								style={{ fontSize: '1.2em' }}
-								dangerouslySetInnerHTML={{ __html: marked(post.text, { smartypants: true }) }}
-							/>
-							<hr />
-							<Comments post={post} />
-							{admin && (
-								<div>
-									<hr />
-									<Button variant="outline-secondary" onClick={() => setIsEditing(true)}>
-										Rediger
-									</Button>
-									<Button
-										style={{ marginLeft: '5px' }}
-										variant="outline-danger"
-										onClick={handleDeletePost}
-									>
-										Slet
-									</Button>
-								</div>
-							)}
-						</div>
-					)}
-				</div>
+				<PostContent post={post} />
 			</RowExpand>
 		</Row>
 	);

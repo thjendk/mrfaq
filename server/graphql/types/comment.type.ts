@@ -32,7 +32,7 @@ export const commentResolvers: Resolvers = {
 		deleteComment: async (root, { id }, ctx) => {
 			permitAdmin(ctx);
 			const comment = await Comment.query().findById(id);
-			comment.$query().delete();
+			await comment.$query().delete();
 			return { id: comment.postId };
 		}
 	},

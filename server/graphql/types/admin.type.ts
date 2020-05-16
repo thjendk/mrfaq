@@ -6,12 +6,15 @@ import { permitAdmin } from 'graphql/utils';
 export const adminTypeDefs = gql`
 	extend type Query {
 		admin: Admin
+		admins: [Admin]
 	}
 
 	extend type Mutation {
 		login(data: LoginInput): String
 		logout: String
-		createAdmin(data: AdminInput): String
+		createAdmin(data: AdminInput): Admin
+		editAdmin(id: Int, data: AdminInput): Admin
+		deleteAdmin(id: Int): String
 	}
 
 	type Admin {
@@ -41,6 +44,11 @@ export const adminResolvers: Resolvers = {
 			const admin = await Admin.query().findById(ctx.admin.adminId);
 			if (!admin) return null;
 			return { id: admin.adminId };
+		},
+		admins: async (obj, args, ctx, info) => {
+			permitAdmin(ctx);
+			const admins = await Admin.query();
+			return admins.filter((a) => a.level <= ctx.admin.level).map((a) => ({ id: a.adminId }));
 		}
 	},
 
@@ -61,8 +69,20 @@ export const adminResolvers: Resolvers = {
 		},
 		createAdmin: async (root, { data: { username, password, fullName } }, ctx) => {
 			permitAdmin(ctx);
-			await Admin.query().insertAndFetch({ username, password, fullName, lastLogin: new Date() });
-			return 'Signed up';
+			const admin = await Admin.query().insertAndFetch({ username, password, fullName });
+			return { id: admin.adminId };
+		},
+		editAdmin: async (root, { id, data }, ctx) => {
+			let admin = await Admin.query().findById(id);
+			permitAdmin(ctx, admin.level);
+			admin = await admin.$query().updateAndFetch(data).skipUndefined();
+			return { id: admin.adminId };
+		},
+		deleteAdmin: async (root, { id }, ctx) => {
+			let admin = await Admin.query().findById(id);
+			permitAdmin(ctx, admin.level);
+			await admin.$query().delete();
+			return 'Admin has been deleted';
 		}
 	},
 
