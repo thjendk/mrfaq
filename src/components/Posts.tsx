@@ -42,7 +42,7 @@ const Posts: React.SFC<PostsProps> = () => {
 	useEffect(() => {
 		setInterval(() => {
 			Post.fetchAll();
-		}, 1000 * 60 * 5);
+		}, 1000 * 60 * 1);
 
 		Post.fetchAll();
 	}, []);
