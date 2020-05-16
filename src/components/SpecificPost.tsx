@@ -22,7 +22,15 @@ const SpecificPost: React.SFC<SpecificPostProps> = () => {
 	if (!post) return <p>Loading...</p>;
 	return (
 		<div>
-			<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'space-between',
+					alignItems: 'center',
+					flexWrap: 'wrap',
+					margin: '5px'
+				}}
+			>
 				<h1>{post.title}</h1>
 				<Button style={{ height: 'fit-content' }} variant="outline-secondary" onClick={() => history.push('/')}>
 					Forside
