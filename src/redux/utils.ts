@@ -13,3 +13,8 @@ export const insertOrReplace = <T extends any>(array: T[], items: T | T[], compa
 		replace(items);
 	}
 };
+
+export const removeFromState = <T extends any>(array: T[], id: number, comparison = 'id') => {
+	const index = array.findIndex((m) => m[comparison] === id);
+	array.splice(index, 1);
+};

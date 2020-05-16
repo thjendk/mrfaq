@@ -9,18 +9,15 @@ import AdminRow from './AdminRow';
 export interface AdminsProps {}
 
 const Admins: React.SFC<AdminsProps> = () => {
-	const admin = useSelector((state: ReduxState) => state.combined.admin);
 	const admins = useSelector((state: ReduxState) => state.combined.admins);
 
 	useEffect(() => {
-		if (!admin) return;
 		Admin.findAll();
-	}, [admin]);
+	}, []);
 
-	if (!admin) return <p>Du har ikke tilladelse til at tilgå denne side.</p>;
 	return (
 		<div>
-			<h1>Brugere</h1>
+			<h2>Brugere</h2>
 			<Table striped bordered hover>
 				<thead>
 					<tr>

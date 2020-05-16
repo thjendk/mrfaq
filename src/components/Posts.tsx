@@ -59,16 +59,13 @@ const Posts: React.SFC<PostsProps> = () => {
 			<Divider />
 			<SearchContext.Provider value={search}>
 				<TagSearchBar />
-			</SearchContext.Provider>
-			<Divider />
-			<PostContainer>
-				<SearchContext.Provider value={search}>
+				<PostContainer>
 					{posts.map((p) => (
 						<PostComponent key={p.id} post={p} />
 					))}
-				</SearchContext.Provider>
-				{admin && <PostCreator />}
-			</PostContainer>
+					{admin && <PostCreator />}
+				</PostContainer>
+			</SearchContext.Provider>
 		</div>
 	);
 };

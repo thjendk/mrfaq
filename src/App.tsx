@@ -6,15 +6,18 @@ import Header from 'components/Header';
 import Admin from 'classes/Admin.class';
 import Login from 'components/Login';
 import SpecificPost from 'components/SpecificPost';
-import Admins from 'components/Admins';
 import Logout from 'components/Logout';
+import Contact from 'components/Contact';
+import AdminPage from 'components/AdminPage';
+import Footer from 'components/Footer';
+import MessageSpecific from 'components/MessageSpecific';
 
 const Layout = styled.div`
 	display: flex;
 	flex-direction: column;
-
-	max-width: 1200px;
 	margin: 5px auto;
+	width: 100%;
+	max-width: 1200px;
 `;
 
 export interface AppProps {}
@@ -25,17 +28,21 @@ const App: React.SFC<AppProps> = () => {
 	}, []);
 
 	return (
-		<div>
+		<div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
 			<Header />
 			<Layout>
 				<Switch>
-					<Route path="/post/:postId" component={SpecificPost} />
-					<Route path="/users" component={Admins} />
+					<Route path="/opslag/:postId" component={SpecificPost} />
+					<Route path="/besked/:messageId" component={MessageSpecific} />
+					<Route path="/kontakt" component={Contact} />
+					<Route path="/admin" component={AdminPage} />
 					<Route path="/logout" component={Logout} />
 					<Route path="/login" component={Login} />
 					<Route path="/" component={Posts} />
 				</Switch>
 			</Layout>
+			<div style={{ flexGrow: 1 }} />
+			<Footer />
 		</div>
 	);
 };

@@ -31,7 +31,7 @@ const PostContent: React.SFC<PostContentProps> = ({ post }) => {
 				<div>
 					<div dangerouslySetInnerHTML={{ __html: marked(post.text, { smartypants: true }) }} />
 					{!location.pathname.includes(post.id.toString()) && (
-						<Button variant="outline-secondary" onClick={() => history.push(`/post/${post.id}`)}>
+						<Button variant="outline-secondary" onClick={() => history.push(`/opslag/${post.id}`)}>
 							Åben
 						</Button>
 					)}

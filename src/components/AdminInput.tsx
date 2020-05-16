@@ -64,7 +64,9 @@ const AdminInput: React.SFC<AdminInputProps> = ({ admin, onCancel }) => {
 						Annuller
 					</Button>
 				)}
-				<Button onClick={handleSubmit}>{!!admin ? 'Rediger' : 'Opret'}</Button>
+				<Button variant="secondary" onClick={handleSubmit}>
+					{!!admin ? 'Rediger' : 'Opret'}
+				</Button>
 			</td>
 		</tr>
 	);

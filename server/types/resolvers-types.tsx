@@ -51,6 +51,28 @@ export type LoginInput = {
   password?: Maybe<Scalars['String']>;
 };
 
+export type Message = {
+   __typename?: 'Message';
+  id?: Maybe<Scalars['Int']>;
+  text?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  comments?: Maybe<Array<Maybe<MessageComment>>>;
+  createdAt?: Maybe<Scalars['String']>;
+};
+
+export type MessageComment = {
+   __typename?: 'MessageComment';
+  id?: Maybe<Scalars['Int']>;
+  text?: Maybe<Scalars['String']>;
+  admin?: Maybe<Admin>;
+  createdAt?: Maybe<Scalars['String']>;
+};
+
+export type MessageInput = {
+  text?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+};
+
 export type Mutation = {
    __typename?: 'Mutation';
   _empty?: Maybe<Scalars['Boolean']>;
@@ -58,6 +80,7 @@ export type Mutation = {
   logout?: Maybe<Scalars['String']>;
   createAdmin?: Maybe<Admin>;
   editAdmin?: Maybe<Admin>;
+  deleteAdmin?: Maybe<Scalars['String']>;
   createPost?: Maybe<Post>;
   editPost?: Maybe<Post>;
   deletePost?: Maybe<Scalars['String']>;
@@ -68,6 +91,8 @@ export type Mutation = {
   deleteTag?: Maybe<Scalars['String']>;
   createComment?: Maybe<Post>;
   deleteComment?: Maybe<Post>;
+  createMessage?: Maybe<Message>;
+  deleteMessage?: Maybe<Scalars['String']>;
 };
 
 
@@ -84,6 +109,11 @@ export type MutationCreateAdminArgs = {
 export type MutationEditAdminArgs = {
   id?: Maybe<Scalars['Int']>;
   data?: Maybe<AdminInput>;
+};
+
+
+export type MutationDeleteAdminArgs = {
+  id?: Maybe<Scalars['Int']>;
 };
 
 
@@ -138,6 +168,16 @@ export type MutationDeleteCommentArgs = {
   id?: Maybe<Scalars['Int']>;
 };
 
+
+export type MutationCreateMessageArgs = {
+  data?: Maybe<MessageInput>;
+};
+
+
+export type MutationDeleteMessageArgs = {
+  id?: Maybe<Scalars['Int']>;
+};
+
 export type Post = {
    __typename?: 'Post';
   id?: Maybe<Scalars['Int']>;
@@ -168,10 +208,17 @@ export type Query = {
   posts?: Maybe<Array<Maybe<Post>>>;
   post?: Maybe<Post>;
   tags?: Maybe<Array<Maybe<Tag>>>;
+  messages?: Maybe<Array<Maybe<Message>>>;
+  message?: Maybe<Message>;
 };
 
 
 export type QueryPostArgs = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryMessageArgs = {
   id?: Maybe<Scalars['Int']>;
 };
 
@@ -272,6 +319,8 @@ export type ResolversTypes = ResolversObject<{
   Post: ResolverTypeWrapper<Partial<Post>>,
   Tag: ResolverTypeWrapper<Partial<Tag>>,
   Comment: ResolverTypeWrapper<Partial<Comment>>,
+  Message: ResolverTypeWrapper<Partial<Message>>,
+  MessageComment: ResolverTypeWrapper<Partial<MessageComment>>,
   Mutation: ResolverTypeWrapper<{}>,
   LoginInput: ResolverTypeWrapper<Partial<LoginInput>>,
   AdminInput: ResolverTypeWrapper<Partial<AdminInput>>,
@@ -279,6 +328,7 @@ export type ResolversTypes = ResolversObject<{
   PostTagInput: ResolverTypeWrapper<Partial<PostTagInput>>,
   TagInput: ResolverTypeWrapper<Partial<TagInput>>,
   CommentInput: ResolverTypeWrapper<Partial<CommentInput>>,
+  MessageInput: ResolverTypeWrapper<Partial<MessageInput>>,
   CacheControlScope: ResolverTypeWrapper<Partial<CacheControlScope>>,
   Upload: ResolverTypeWrapper<Partial<Scalars['Upload']>>,
 }>;
@@ -293,6 +343,8 @@ export type ResolversParentTypes = ResolversObject<{
   Post: Partial<Post>,
   Tag: Partial<Tag>,
   Comment: Partial<Comment>,
+  Message: Partial<Message>,
+  MessageComment: Partial<MessageComment>,
   Mutation: {},
   LoginInput: Partial<LoginInput>,
   AdminInput: Partial<AdminInput>,
@@ -300,6 +352,7 @@ export type ResolversParentTypes = ResolversObject<{
   PostTagInput: Partial<PostTagInput>,
   TagInput: Partial<TagInput>,
   CommentInput: Partial<CommentInput>,
+  MessageInput: Partial<MessageInput>,
   CacheControlScope: Partial<CacheControlScope>,
   Upload: Partial<Scalars['Upload']>,
 }>;
@@ -321,12 +374,30 @@ export type CommentResolvers<ContextType = Context, ParentType extends Resolvers
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 
+export type MessageResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Message'] = ResolversParentTypes['Message']> = ResolversObject<{
+  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  text?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  comments?: Resolver<Maybe<Array<Maybe<ResolversTypes['MessageComment']>>>, ParentType, ContextType>,
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
+export type MessageCommentResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MessageComment'] = ResolversParentTypes['MessageComment']> = ResolversObject<{
+  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  text?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  admin?: Resolver<Maybe<ResolversTypes['Admin']>, ParentType, ContextType>,
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+}>;
+
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   _empty?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
   login?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationLoginArgs, never>>,
   logout?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   createAdmin?: Resolver<Maybe<ResolversTypes['Admin']>, ParentType, ContextType, RequireFields<MutationCreateAdminArgs, never>>,
   editAdmin?: Resolver<Maybe<ResolversTypes['Admin']>, ParentType, ContextType, RequireFields<MutationEditAdminArgs, never>>,
+  deleteAdmin?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteAdminArgs, never>>,
   createPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationCreatePostArgs, never>>,
   editPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationEditPostArgs, never>>,
   deletePost?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeletePostArgs, never>>,
@@ -337,6 +408,8 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   deleteTag?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteTagArgs, never>>,
   createComment?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationCreateCommentArgs, never>>,
   deleteComment?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, never>>,
+  createMessage?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationCreateMessageArgs, never>>,
+  deleteMessage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteMessageArgs, never>>,
 }>;
 
 export type PostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = ResolversObject<{
@@ -358,6 +431,8 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType>,
   post?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryPostArgs, never>>,
   tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['Tag']>>>, ParentType, ContextType>,
+  messages?: Resolver<Maybe<Array<Maybe<ResolversTypes['Message']>>>, ParentType, ContextType>,
+  message?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<QueryMessageArgs, never>>,
 }>;
 
 export type TagResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = ResolversObject<{
@@ -375,6 +450,8 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 export type Resolvers<ContextType = Context> = ResolversObject<{
   Admin?: AdminResolvers<ContextType>,
   Comment?: CommentResolvers<ContextType>,
+  Message?: MessageResolvers<ContextType>,
+  MessageComment?: MessageCommentResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
   Post?: PostResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,

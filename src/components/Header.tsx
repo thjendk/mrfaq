@@ -5,7 +5,7 @@ import { ReduxState } from 'redux/reducers';
 import { useHistory } from 'react-router-dom';
 import { BsHouseDoor } from 'react-icons/bs';
 
-const StyledHeader = styled.header`
+export const MenuBar = styled.header`
 	display: flex;
 	margin: 0;
 	background-color: darkolivegreen;
@@ -13,7 +13,7 @@ const StyledHeader = styled.header`
 	justify-content: space-between;
 `;
 
-const HeaderItem = styled.div`
+export const MenuItem = styled.div`
 	display: flex;
 	align-items: center;
 	margin: 0;
@@ -32,14 +32,14 @@ const Header: React.SFC<HeaderProps> = () => {
 	const history = useHistory();
 
 	return (
-		<StyledHeader>
-			<HeaderItem onClick={() => history.push('/')}>
+		<MenuBar>
+			<MenuItem onClick={() => history.push('/')}>
 				<BsHouseDoor />{' '}
-			</HeaderItem>
-			{admin && <HeaderItem onClick={() => history.push('/users')}>Brugere</HeaderItem>}
-			<h1 style={{ margin: '0 auto', fontSize: '1.5rem', padding: '5px' }}>Medicinerrådets FAQ</h1>
-			{admin && <HeaderItem onClick={() => history.push('/logout')}>Log ud</HeaderItem>}
-		</StyledHeader>
+			</MenuItem>
+			{admin && <MenuItem onClick={() => history.push('/admin')}>Admin</MenuItem>}
+			<h1 style={{ margin: '0 auto', fontSize: '1.5rem', padding: '5px' }}>Medicinerrådet, Aarhus Universitet</h1>
+			{admin && <MenuItem onClick={() => history.push('/logout')}>Log ud</MenuItem>}
+		</MenuBar>
 	);
 };
 

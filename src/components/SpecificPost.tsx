@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import Post from 'classes/Post.class';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ReduxState } from 'redux/reducers';
 import PostContent from './PostContent';
-import { Button } from 'react-bootstrap';
 import { Divider } from './Posts';
 
 export interface SpecificPostProps {}

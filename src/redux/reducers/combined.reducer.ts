@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Post, Admin, Tag } from 'types/generated';
-import { insertOrReplace } from '../utils';
+import { insertOrReplace, removeFromState } from '../utils';
+import Message from 'classes/Message.class';
 
 const initialState = {
 	posts: [] as Post[],
 	admin: null as Admin,
 	tags: [] as Tag[],
-	admins: [] as Admin[]
+	admins: [] as Admin[],
+	messages: [] as Message[]
 };
 
 const combinedReducer = createSlice({
@@ -23,15 +25,19 @@ const combinedReducer = createSlice({
 			insertOrReplace(state.tags, action.payload);
 		},
 		removePost: (state, action: PayloadAction<number>) => {
-			const index = state.posts.findIndex((p) => p.id === action.payload);
-			state.posts.splice(index, 1);
+			removeFromState(state.posts, action.payload);
 		},
 		addAdmins: (state, action: PayloadAction<Admin | Admin[]>) => {
 			insertOrReplace(state.admins, action.payload);
 		},
 		removeAdmin: (state, action: PayloadAction<number>) => {
-			const index = state.admins.findIndex((a) => a.id === action.payload);
-			state.admins.splice(index, 1);
+			removeFromState(state.admins, action.payload);
+		},
+		addMessages: (state, action: PayloadAction<Message | Message[]>) => {
+			insertOrReplace(state.messages, action.payload);
+		},
+		removeMessage: (state, action: PayloadAction<number>) => {
+			removeFromState(state.messages, action.payload);
 		}
 	}
 });

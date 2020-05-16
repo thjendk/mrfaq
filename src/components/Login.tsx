@@ -56,15 +56,25 @@ const Login: React.SFC<LoginProps> = () => {
 							name="password"
 						/>
 					</Form.Group>
-					<Button onClick={handleSubmit} disabled={isLoading} variant="secondary">
-						{isLoading ? <Spinner size="sm" animation="border" /> : 'Log ind'}
-					</Button>
-					{error && (
-						<>
-							<Divider />
-							<Alert variant="danger">Brugernavn eller adgangskode er forkert</Alert>
-						</>
-					)}
+					<Form.Group>
+						<Button
+							type="submit"
+							onClick={(e) => {
+								e.preventDefault();
+								handleSubmit();
+							}}
+							disabled={isLoading}
+							variant="secondary"
+						>
+							{isLoading ? <Spinner size="sm" animation="border" /> : 'Log ind'}
+						</Button>
+						{error && (
+							<>
+								<Divider />
+								<Alert variant="danger">Brugernavn eller adgangskode er forkert</Alert>
+							</>
+						)}
+					</Form.Group>
 				</Form>
 			</Card.Body>
 		</Card>

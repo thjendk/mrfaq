@@ -49,6 +49,28 @@ export type LoginInput = {
   password?: Maybe<Scalars['String']>;
 };
 
+export type Message = {
+   __typename?: 'Message';
+  id?: Maybe<Scalars['Int']>;
+  text?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  comments?: Maybe<Array<Maybe<MessageComment>>>;
+  createdAt?: Maybe<Scalars['String']>;
+};
+
+export type MessageComment = {
+   __typename?: 'MessageComment';
+  id?: Maybe<Scalars['Int']>;
+  text?: Maybe<Scalars['String']>;
+  admin?: Maybe<Admin>;
+  createdAt?: Maybe<Scalars['String']>;
+};
+
+export type MessageInput = {
+  text?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+};
+
 export type Mutation = {
    __typename?: 'Mutation';
   _empty?: Maybe<Scalars['Boolean']>;
@@ -56,6 +78,7 @@ export type Mutation = {
   logout?: Maybe<Scalars['String']>;
   createAdmin?: Maybe<Admin>;
   editAdmin?: Maybe<Admin>;
+  deleteAdmin?: Maybe<Scalars['String']>;
   createPost?: Maybe<Post>;
   editPost?: Maybe<Post>;
   deletePost?: Maybe<Scalars['String']>;
@@ -66,6 +89,8 @@ export type Mutation = {
   deleteTag?: Maybe<Scalars['String']>;
   createComment?: Maybe<Post>;
   deleteComment?: Maybe<Post>;
+  createMessage?: Maybe<Message>;
+  deleteMessage?: Maybe<Scalars['String']>;
 };
 
 
@@ -82,6 +107,11 @@ export type MutationCreateAdminArgs = {
 export type MutationEditAdminArgs = {
   id?: Maybe<Scalars['Int']>;
   data?: Maybe<AdminInput>;
+};
+
+
+export type MutationDeleteAdminArgs = {
+  id?: Maybe<Scalars['Int']>;
 };
 
 
@@ -136,6 +166,16 @@ export type MutationDeleteCommentArgs = {
   id?: Maybe<Scalars['Int']>;
 };
 
+
+export type MutationCreateMessageArgs = {
+  data?: Maybe<MessageInput>;
+};
+
+
+export type MutationDeleteMessageArgs = {
+  id?: Maybe<Scalars['Int']>;
+};
+
 export type Post = {
    __typename?: 'Post';
   id?: Maybe<Scalars['Int']>;
@@ -166,10 +206,17 @@ export type Query = {
   posts?: Maybe<Array<Maybe<Post>>>;
   post?: Maybe<Post>;
   tags?: Maybe<Array<Maybe<Tag>>>;
+  messages?: Maybe<Array<Maybe<Message>>>;
+  message?: Maybe<Message>;
 };
 
 
 export type QueryPostArgs = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryMessageArgs = {
   id?: Maybe<Scalars['Int']>;
 };
 
