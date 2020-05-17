@@ -24,6 +24,7 @@ export const messageTypeDefs = gql`
 		email: String
 		comments: [MessageComment]
 		createdAt: String
+		answered: Boolean
 	}
 
 	input MessageInput {
@@ -97,6 +98,10 @@ export const messageResolvers: Resolvers = {
 		comments: async ({ id }) => {
 			const comments = await MessageComment.query().where({ messageId: id });
 			return comments.map((c) => ({ id: c.messageCommentId }));
+		},
+		answered: async ({ id }) => {
+			const isAnswered = await MessageComment.query().where({ messageId: id }).whereNotNull('adminId').first();
+			return !!isAnswered;
 		}
 	},
 

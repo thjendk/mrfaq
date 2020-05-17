@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { ReduxState } from 'redux/reducers';
 import ConfirmButton from './ConfirmButton';
 import { useHistory } from 'react-router-dom';
+import AnsweredTag from './AnsweredTag';
 
 export interface MessagesProps {}
 
@@ -28,6 +29,7 @@ const Messages: React.SFC<MessagesProps> = () => {
 					<th>Dato</th>
 					<th>Besked</th>
 					<th>Email</th>
+					<th>Besvaret</th>
 					<th>Valg</th>
 				</thead>
 				<tbody>
@@ -36,6 +38,9 @@ const Messages: React.SFC<MessagesProps> = () => {
 							<td>{new Date(m.createdAt).toLocaleString()}</td>
 							<td>{m.text}</td>
 							<td>{m.email}</td>
+							<td>
+								<AnsweredTag answered={m.answered} />
+							</td>
 							<td>
 								<Button
 									style={{ marginRight: '5px' }}

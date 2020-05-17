@@ -58,6 +58,7 @@ export type Message = {
   email?: Maybe<Scalars['String']>;
   comments?: Maybe<Array<Maybe<MessageComment>>>;
   createdAt?: Maybe<Scalars['String']>;
+  answered?: Maybe<Scalars['Boolean']>;
 };
 
 export type MessageComment = {
@@ -399,6 +400,7 @@ export type MessageResolvers<ContextType = Context, ParentType extends Resolvers
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   comments?: Resolver<Maybe<Array<Maybe<ResolversTypes['MessageComment']>>>, ParentType, ContextType>,
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  answered?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 }>;
 

@@ -13,6 +13,7 @@ class Message {
 			text
 			email
 			createdAt
+			answered
 			comments {
 				id
 				text

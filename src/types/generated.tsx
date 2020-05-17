@@ -56,6 +56,7 @@ export type Message = {
   email?: Maybe<Scalars['String']>;
   comments?: Maybe<Array<Maybe<MessageComment>>>;
   createdAt?: Maybe<Scalars['String']>;
+  answered?: Maybe<Scalars['Boolean']>;
 };
 
 export type MessageComment = {

@@ -27,7 +27,11 @@ const CommentComponent: React.FC<CommentComponentProps> = ({ commentAdmin, onDel
 		<CommentStyle>
 			<p style={{ color: 'grey', fontSize: '0.8em', margin: 0 }}>
 				{new Date(createdAt).toLocaleString()} -{' '}
-				{commentAdmin && <span>{commentAdmin.fullName} (Medicinerrådet)</span>}
+				{commentAdmin && (
+					<span style={{ fontWeight: 'bold', color: 'darkolivegreen' }}>
+						{commentAdmin.fullName} (Medicinerrådet)
+					</span>
+				)}
 			</p>
 			<hr style={{ margin: '2px' }} />
 			<div dangerouslySetInnerHTML={{ __html: marked(text, { smartypants: true }) }} />
