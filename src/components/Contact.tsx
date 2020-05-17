@@ -59,10 +59,15 @@ const Contact: React.SFC<ContactProps> = () => {
 						type="text"
 						placeholder="Angiv din email, hvis du vil kontaktes"
 					/>
-					<p style={{ color: 'grey', fontSize: '0.8em' }}>
-						Det er frivilligt om du skriver din email. Vi kan ikke kontakte dig uden, men du vil forblive
-						100% anonym. Vi vil undersøge din sag uanset hvad.
-					</p>
+					<div style={{ textAlign: 'center' }}>
+						<p style={{ color: 'grey', fontSize: '0.8em' }}>
+							Det er frivilligt om du skriver din email, hvis du vil forblive 100% anonym. Vi vil aldrig
+							dele din information eller besked med andre, uanset om du angiver din email.
+							<br />
+							Du kan følge din besked her på siden i det link som oprettes, når du sender beskeden. Vi vil
+							uden din mail ikke kunne minde dig om, når vi har svaret dig.
+						</p>
+					</div>
 				</Form.Group>
 				<Form.Group>
 					<Button
