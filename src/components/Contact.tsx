@@ -97,7 +97,7 @@ const Contact: React.SFC<ContactProps> = () => {
 						</span>
 					</Alert>
 				)}
-				{error && <Alert>{error}</Alert>}
+				{error && <Alert variant="dark">{error}</Alert>}
 			</Form>
 			<div style={{ textAlign: 'center' }}>
 				<p style={{ color: 'darkolivegreen', fontSize: '0.9em' }}>
