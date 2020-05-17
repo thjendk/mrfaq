@@ -57,7 +57,7 @@ const Contact: React.SFC<ContactProps> = () => {
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						type="text"
-						placeholder="Angiv din email, hvis du vil kontaktes"
+						placeholder="Angiv din email (frivilligt)"
 					/>
 					<div style={{ textAlign: 'center' }}>
 						<p style={{ color: 'grey', fontSize: '0.8em' }}>
