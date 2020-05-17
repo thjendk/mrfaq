@@ -58,7 +58,8 @@ const Posts: React.SFC<PostsProps> = () => {
 			/>
 			<Divider />
 			<SearchContext.Provider value={search}>
-				<TagSearchBar />
+				<TagSearchBar handleSearch={(text) => setSearch(text)} />
+				<Divider />
 				<PostContainer>
 					{posts.map((p) => (
 						<PostComponent key={p.id} post={p} />

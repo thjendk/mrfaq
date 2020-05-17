@@ -29,7 +29,7 @@ const PostTitle = styled.h2`
 	}
 `;
 
-export const Tag = styled.div<{ clickable?: boolean }>`
+export const Tag = styled.div`
 	display: flex;
 	align-items: center;
 	border: 1px solid black;
@@ -39,7 +39,7 @@ export const Tag = styled.div<{ clickable?: boolean }>`
 	padding: 2px 8px;
 	margin-right: 5px;
 	font-size: 0.9em;
-	cursor: ${(props) => (props.clickable ? 'pointer' : null)};
+	cursor: ${(props) => (props.onClick ? 'pointer' : null)};
 `;
 
 export const Row = styled.div``;

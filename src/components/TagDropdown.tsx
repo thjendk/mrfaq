@@ -46,7 +46,7 @@ const TagDropdown: React.SFC<TagDropdownProps> = ({ postId }) => {
 
 	return (
 		<>
-			<Tag onClick={() => setIsOpen(!isOpen)} clickable color="#6c757d">
+			<Tag onClick={() => setIsOpen(!isOpen)} color="#6c757d">
 				+ Tilføj
 			</Tag>
 			<Popup open={isOpen}>
