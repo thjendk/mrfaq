@@ -1,42 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Post from 'classes/Post.class';
 import Comment from './Comment';
-import { Form, Button } from 'react-bootstrap';
 import CommentClass from 'classes/Comment.class';
+import CommentForm from './CommentForm';
 
 export interface CommentsProps {
 	post: Post;
 }
 
 const Comments: React.SFC<CommentsProps> = ({ post }) => {
-	const [text, setText] = useState('');
-
-	const handleSubmit = async () => {
+	const handleSubmit = async (text: string) => {
 		await CommentClass.create({ text, postId: post.id });
+	};
+
+	const handleDelete = async (id: number) => {
+		await CommentClass.remove(id);
 	};
 
 	return (
 		<div style={{ margin: '1rem' }}>
 			{post.comments.map((c) => (
-				<Comment comment={c} />
+				<Comment
+					commentAdmin={c.admin}
+					createdAt={c.createdAt}
+					onDelete={() => handleDelete(c.id)}
+					text={c.text}
+					key={c.id}
+				/>
 			))}
-			<Form>
-				<Form.Group>
-					<Form.Label>Kommentar</Form.Label>
-					<Form.Control
-						as="textarea"
-						value={text}
-						onChange={(e) => setText(e.target.value)}
-						rows={3}
-						placeholder="Skriv din kommentar"
-					/>
-				</Form.Group>
-				<Form.Group>
-					<Button onClick={handleSubmit} variant="secondary">
-						Tilføj kommentar
-					</Button>
-				</Form.Group>
-			</Form>
+			<CommentForm onSubmit={(text) => handleSubmit(text)} />
 		</div>
 	);
 };

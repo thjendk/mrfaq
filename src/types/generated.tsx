@@ -66,6 +66,11 @@ export type MessageComment = {
   createdAt?: Maybe<Scalars['String']>;
 };
 
+export type MessageCommentInput = {
+  text?: Maybe<Scalars['String']>;
+  messageId?: Maybe<Scalars['Int']>;
+};
+
 export type MessageInput = {
   text?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -91,6 +96,8 @@ export type Mutation = {
   deleteComment?: Maybe<Post>;
   createMessage?: Maybe<Message>;
   deleteMessage?: Maybe<Scalars['String']>;
+  createMessageComment?: Maybe<Message>;
+  deleteMessageComment?: Maybe<Message>;
 };
 
 
@@ -173,6 +180,16 @@ export type MutationCreateMessageArgs = {
 
 
 export type MutationDeleteMessageArgs = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+
+export type MutationCreateMessageCommentArgs = {
+  data?: Maybe<MessageCommentInput>;
+};
+
+
+export type MutationDeleteMessageCommentArgs = {
   id?: Maybe<Scalars['Int']>;
 };
 

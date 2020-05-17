@@ -26,11 +26,11 @@ app.use(async (req: any, res, next) => {
 			req.admin = admin;
 		} catch (error) {
 			res.cookie('user', {}, { expires: new Date(0) });
-			return null;
+			// If no admin is logged in, admin is null
+			req.admin = null;
 		}
 	}
 
-	// If no user is logged in, user is null
 	next();
 });
 

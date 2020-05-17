@@ -13,6 +13,15 @@ class Message {
 			text
 			email
 			createdAt
+			comments {
+				id
+				text
+				admin {
+					id
+					fullName
+				}
+				createdAt
+			}
 		}
 	`;
 

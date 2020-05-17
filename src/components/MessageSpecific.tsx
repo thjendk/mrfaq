@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ReduxState } from 'redux/reducers';
 import styled from 'styled-components';
+import MessageComments from './MessageComments';
 
 export interface MessageSpecificProps {}
 
@@ -49,7 +50,10 @@ const MessageSpecific: React.SFC<MessageSpecificProps> = () => {
 					</p>
 				)}
 				<hr />
-				<p>Kommentarer</p>
+				<div>
+					<h2 style={{ fontSize: '1.2em' }}>Kommentarer</h2>
+					<MessageComments message={message} />
+				</div>
 			</div>
 		</div>
 	);

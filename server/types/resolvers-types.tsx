@@ -68,6 +68,11 @@ export type MessageComment = {
   createdAt?: Maybe<Scalars['String']>;
 };
 
+export type MessageCommentInput = {
+  text?: Maybe<Scalars['String']>;
+  messageId?: Maybe<Scalars['Int']>;
+};
+
 export type MessageInput = {
   text?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -93,6 +98,8 @@ export type Mutation = {
   deleteComment?: Maybe<Post>;
   createMessage?: Maybe<Message>;
   deleteMessage?: Maybe<Scalars['String']>;
+  createMessageComment?: Maybe<Message>;
+  deleteMessageComment?: Maybe<Message>;
 };
 
 
@@ -175,6 +182,16 @@ export type MutationCreateMessageArgs = {
 
 
 export type MutationDeleteMessageArgs = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+
+export type MutationCreateMessageCommentArgs = {
+  data?: Maybe<MessageCommentInput>;
+};
+
+
+export type MutationDeleteMessageCommentArgs = {
   id?: Maybe<Scalars['Int']>;
 };
 
@@ -329,6 +346,7 @@ export type ResolversTypes = ResolversObject<{
   TagInput: ResolverTypeWrapper<Partial<TagInput>>,
   CommentInput: ResolverTypeWrapper<Partial<CommentInput>>,
   MessageInput: ResolverTypeWrapper<Partial<MessageInput>>,
+  MessageCommentInput: ResolverTypeWrapper<Partial<MessageCommentInput>>,
   CacheControlScope: ResolverTypeWrapper<Partial<CacheControlScope>>,
   Upload: ResolverTypeWrapper<Partial<Scalars['Upload']>>,
 }>;
@@ -353,6 +371,7 @@ export type ResolversParentTypes = ResolversObject<{
   TagInput: Partial<TagInput>,
   CommentInput: Partial<CommentInput>,
   MessageInput: Partial<MessageInput>,
+  MessageCommentInput: Partial<MessageCommentInput>,
   CacheControlScope: Partial<CacheControlScope>,
   Upload: Partial<Scalars['Upload']>,
 }>;
@@ -410,6 +429,8 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   deleteComment?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, never>>,
   createMessage?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationCreateMessageArgs, never>>,
   deleteMessage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteMessageArgs, never>>,
+  createMessageComment?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationCreateMessageCommentArgs, never>>,
+  deleteMessageComment?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationDeleteMessageCommentArgs, never>>,
 }>;
 
 export type PostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = ResolversObject<{

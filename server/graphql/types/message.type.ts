@@ -13,6 +13,9 @@ export const messageTypeDefs = gql`
 	extend type Mutation {
 		createMessage(data: MessageInput): Message
 		deleteMessage(id: Int): String
+
+		createMessageComment(data: MessageCommentInput): Message
+		deleteMessageComment(id: Int): Message
 	}
 
 	type Message {
@@ -33,6 +36,11 @@ export const messageTypeDefs = gql`
 		text: String
 		admin: Admin
 		createdAt: String
+	}
+
+	input MessageCommentInput {
+		text: String
+		messageId: Int
 	}
 `;
 
@@ -59,6 +67,16 @@ export const messageResolvers: Resolvers = {
 
 			await Message.query().deleteById(id);
 			return `Deleted message with ID ${id}`;
+		},
+		createMessageComment: async (root, { data }, ctx) => {
+			const comment = await MessageComment.query().insertAndFetch({ ...data, adminId: ctx.admin.adminId });
+			return { id: comment.messageId };
+		},
+		deleteMessageComment: async (root, { id }, ctx) => {
+			permitAdmin(ctx);
+			const comment = await MessageComment.query().findById(id);
+			await comment.$query().delete();
+			return { id: comment.messageId };
 		}
 	},
 
@@ -83,7 +101,18 @@ export const messageResolvers: Resolvers = {
 	},
 
 	MessageComment: {
-		id: ({ id }) => id
-		// TODO: Lav resten af message comments, også på frontend
+		id: ({ id }) => id,
+		text: async ({ id }, args, ctx) => {
+			const comment = await ctx.messageCommentLoader.load(id);
+			return comment.text;
+		},
+		admin: async ({ id }, args, ctx) => {
+			const comment = await ctx.messageCommentLoader.load(id);
+			return { id: comment.adminId };
+		},
+		createdAt: async ({ id }, args, ctx) => {
+			const comment = await ctx.messageCommentLoader.load(id);
+			return comment.createdAt.toISOString();
+		}
 	}
 };
