@@ -12,7 +12,7 @@ const ConfirmButton: React.SFC<ConfirmButtonProps> = ({ onDelete, children = 'Sl
 		<Popup
 			position="top center"
 			trigger={() =>
-				loading ? <Spinner size="sm" animation="grow" /> : <Button variant="danger">{children}</Button>
+				loading ? <Spinner size="sm" animation="grow" /> : <Button variant="outline-danger">{children}</Button>
 			}
 		>
 			<div style={{ textAlign: 'center' }}>

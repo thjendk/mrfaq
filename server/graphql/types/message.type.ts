@@ -49,11 +49,11 @@ export const messageResolvers: Resolvers = {
 	Query: {
 		messages: async (root, args, ctx) => {
 			permitAdmin(ctx);
-			const messages = await Message.query();
+			const messages = await Message.query().where({ deleted: 0 });
 			return messages.map((m) => ({ id: m.messageId }));
 		},
 		message: async (root, { id }, ctx) => {
-			const message = await Message.query().findById(id);
+			const message = await Message.query().findById(id).where({ deleted: 0 });
 			return { id: message.messageId };
 		}
 	},
@@ -66,7 +66,7 @@ export const messageResolvers: Resolvers = {
 		deleteMessage: async (root, { id }, ctx) => {
 			permitAdmin(ctx);
 
-			await Message.query().deleteById(id);
+			await Message.query().findById(id).update({ deleted: 1 });
 			return `Deleted message with ID ${id}`;
 		},
 		createMessageComment: async (root, { data }, ctx) => {

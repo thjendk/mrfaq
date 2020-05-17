@@ -41,10 +41,10 @@ class Message {
 
 	static delete = async (id: number) => {
 		const mutation = gql`
-      DeleteMessage($id: Int) {
-       deleteMessage(id: $id)
-      }
-    `;
+			mutation DeleteMessage($id: Int) {
+				deleteMessage(id: $id)
+			}
+		`;
 
 		await Apollo.mutate('deleteMessage', mutation, { id });
 		return store.dispatch(combinedReducer.actions.removeMessage(id));

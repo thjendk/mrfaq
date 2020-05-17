@@ -34,7 +34,7 @@ const AdminRow: React.SFC<AdminRowProps> = ({ admin }) => {
 			<td>{admin.fullName}</td>
 			<td>**********</td>
 			<td>
-				<Button variant="warning" onClick={() => setIsEditing(true)}>
+				<Button variant="outline-warning" onClick={() => setIsEditing(true)}>
 					Rediger
 				</Button>
 				{me.id !== admin.id && <ConfirmButton onDelete={handleDelete} />}

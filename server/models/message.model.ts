@@ -11,6 +11,7 @@ interface Message {
 	email: string;
 	createdAt: Date;
 	updatedAt: Date;
+	deleted: 1 | 0;
 }
 
 class Message extends Model {
