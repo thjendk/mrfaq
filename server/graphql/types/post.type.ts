@@ -44,7 +44,7 @@ export const postTypeDefs = gql`
 export const postResolvers: Resolvers = {
 	Query: {
 		posts: async () => {
-			const posts = await Post.query().where({ deleted: 0 });
+			const posts = await Post.query().where({ deleted: 0 }).orderBy('createdAt', 'desc');
 			return posts.map((p) => ({ id: p.postId }));
 		},
 		post: async (root, { id }) => {

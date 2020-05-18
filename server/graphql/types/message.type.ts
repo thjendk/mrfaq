@@ -49,7 +49,7 @@ export const messageResolvers: Resolvers = {
 	Query: {
 		messages: async (root, args, ctx) => {
 			permitAdmin(ctx);
-			const messages = await Message.query().where({ deleted: 0 });
+			const messages = await Message.query().where({ deleted: 0 }).orderBy('createdAt', 'desc');
 			return messages.map((m) => ({ id: m.messageId }));
 		},
 		message: async (root, { id }, ctx) => {
