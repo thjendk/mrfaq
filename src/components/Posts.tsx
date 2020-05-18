@@ -7,6 +7,7 @@ import { Form } from 'react-bootstrap';
 import Post from 'classes/Post.class';
 import styled from 'styled-components';
 import TagSearchBar from './TagSearchBar';
+import Tag from 'classes/Tag.class';
 export const SearchContext = React.createContext('');
 
 export const Divider = styled.div`
@@ -42,9 +43,11 @@ const Posts: React.SFC<PostsProps> = () => {
 	useEffect(() => {
 		setInterval(() => {
 			Post.fetchAll();
+			Tag.fetchAll();
 		}, 1000 * 60 * 1);
 
 		Post.fetchAll();
+		Tag.fetchAll();
 	}, []);
 
 	return (
