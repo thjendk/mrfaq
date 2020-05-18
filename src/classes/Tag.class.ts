@@ -40,7 +40,7 @@ class Tag {
 			${Tag.fragment}
 		`;
 
-		const tag = Apollo.mutate('createTag', mutation, { data });
+		const tag = await Apollo.mutate('createTag', mutation, { data });
 		return store.dispatch(combinedReducer.actions.addTags(tag));
 	};
 }
