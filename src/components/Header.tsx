@@ -11,6 +11,10 @@ export const MenuBar = styled.header`
 	background-color: darkolivegreen;
 	color: white;
 	justify-content: space-between;
+
+	@media screen and (max-width: 600px) {
+		flex-wrap: wrap;
+	}
 `;
 
 export const MenuItem = styled.div`
@@ -18,10 +22,26 @@ export const MenuItem = styled.div`
 	align-items: center;
 	margin: 0;
 	padding: 5px 10px;
-	cursor: pointer;
+	cursor: ${(props) => (props.onClick ? 'pointer' : null)};
 
 	:hover {
-		background-color: #4a5e2a;
+		background-color: ${(props) => (props.onClick ? '#4a5e2a' : null)};
+	}
+
+	@media screen and (max-width: 600px) {
+		text-align: center;
+		font-size: 0.9em;
+	}
+`;
+
+const PageTitle = styled.h1`
+	margin: 0 auto;
+	font-size: 1.5em;
+	padding: 5px;
+	text-align: center;
+
+	@media screen and (max-width: 600px) {
+		font-size: 1em;
 	}
 `;
 
@@ -37,7 +57,7 @@ const Header: React.SFC<HeaderProps> = () => {
 				<BsHouseDoor />{' '}
 			</MenuItem>
 			{admin && <MenuItem onClick={() => history.push('/admin')}>Admin</MenuItem>}
-			<h1 style={{ margin: '0 auto', fontSize: '1.5rem', padding: '5px' }}>Medicinerrådet, Aarhus Universitet</h1>
+			<PageTitle>Medicinerrådet, Aarhus Universitet</PageTitle>
 			{admin && <MenuItem onClick={() => history.push('/logout')}>Log ud</MenuItem>}
 		</MenuBar>
 	);
