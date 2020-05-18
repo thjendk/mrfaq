@@ -1,6 +1,7 @@
 import React from 'react';
 import { MenuBar, MenuItem } from 'components/Header';
 import { useHistory } from 'react-router-dom';
+import { BsHeartFill } from 'react-icons/bs';
 
 export interface FooterProps {}
 
@@ -16,7 +17,10 @@ const Footer: React.SFC<FooterProps> = () => {
 				</MenuItem>
 			</div>
 			<div style={{ flexGrow: 1 }} />
-			<MenuItem style={{ whiteSpace: 'nowrap' }}>Lavet af Thomas Jensen</MenuItem>
+			<MenuItem style={{ whiteSpace: 'nowrap' }}>
+				<BsHeartFill style={{ marginRight: '5px', fontSize: '0.9em' }} />
+				Lavet af Thomas Jensen
+			</MenuItem>
 		</MenuBar>
 	);
 };
