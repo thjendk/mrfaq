@@ -70,7 +70,7 @@ export const messageResolvers: Resolvers = {
 			return `Deleted message with ID ${id}`;
 		},
 		createMessageComment: async (root, { data }, ctx) => {
-			const comment = await MessageComment.query().insertAndFetch({ ...data, adminId: ctx.admin.adminId });
+			const comment = await MessageComment.query().insertAndFetch({ ...data, adminId: ctx.admin?.adminId });
 			return { id: comment.messageId };
 		},
 		deleteMessageComment: async (root, { id }, ctx) => {
@@ -100,8 +100,9 @@ export const messageResolvers: Resolvers = {
 			return comments.map((c) => ({ id: c.messageCommentId }));
 		},
 		answered: async ({ id }) => {
-			const isAnswered = await MessageComment.query().where({ messageId: id }).whereNotNull('adminId').first();
-			return !!isAnswered;
+			const isAnswered = await MessageComment.query().where({ messageId: id }).orderBy('createdAt', 'asc');
+			if (isAnswered[isAnswered.length - 1]?.adminId) return true; // If the admin is the last message in the thread, then it's answered.
+			return false;
 		}
 	},
 
@@ -113,6 +114,7 @@ export const messageResolvers: Resolvers = {
 		},
 		admin: async ({ id }, args, ctx) => {
 			const comment = await ctx.messageCommentLoader.load(id);
+			if (!comment.adminId) return null;
 			return { id: comment.adminId };
 		},
 		createdAt: async ({ id }, args, ctx) => {

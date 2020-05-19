@@ -26,10 +26,10 @@ const CommentComponent: React.FC<CommentComponentProps> = ({ commentAdmin, onDel
 	return (
 		<CommentStyle>
 			<p style={{ color: 'grey', fontSize: '0.8em', margin: 0 }}>
-				{new Date(createdAt).toLocaleString()} -{' '}
+				{new Date(createdAt).toLocaleString()}{' '}
 				{commentAdmin && (
 					<span style={{ fontWeight: 'bold', color: 'darkolivegreen' }}>
-						{commentAdmin.fullName} (Medicinerrådet)
+						- {commentAdmin.fullName} (Medicinerrådet)
 					</span>
 				)}
 			</p>
