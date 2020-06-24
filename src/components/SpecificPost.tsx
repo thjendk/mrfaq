@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { ReduxState } from 'redux/reducers';
 import PostContent from './PostContent';
 import { Divider } from './Posts';
+import { TagLabel } from './TagLabel';
 
 export interface SpecificPostProps {}
 
@@ -21,6 +22,11 @@ const SpecificPost: React.SFC<SpecificPostProps> = () => {
 	return (
 		<div style={{ margin: '5px' }}>
 			<h1>{post.title}</h1>
+			<div style={{ display: 'flex' }}>
+				{post.tags.map((t) => (
+					<TagLabel tag={t} post={post} />
+				))}
+			</div>
 			<Divider />
 			<div style={{ border: '1px solid lightgrey' }}>
 				<PostContent post={post} />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Tag } from './Post';
+import { Tag } from './TagLabel';
 import { useSelector } from 'react-redux';
 import { ReduxState } from 'redux/reducers';
 import styled from 'styled-components';

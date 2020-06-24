@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { ReduxState } from 'redux/reducers';
-import { Tag } from './Post';
+import { Tag } from './TagLabel';
 
 export interface TagSearchBarProps {
 	handleSearch: (text: string) => void;

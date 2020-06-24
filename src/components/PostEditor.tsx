@@ -1,7 +1,6 @@
 import React from 'react';
 import PostForm from './PostForm';
 import Post from 'classes/Post.class';
-import { PostInput } from 'types/generated';
 
 export interface PostEditorProps {
 	post: Post;
@@ -9,12 +8,7 @@ export interface PostEditorProps {
 }
 
 const PostEditor: React.SFC<PostEditorProps> = ({ post, onCancel }) => {
-	const handleEdit = async (data: PostInput) => {
-		await Post.edit(post.id, data);
-		onCancel();
-	};
-
-	return <PostForm onCancel={onCancel} post={post} onSubmit={handleEdit} />;
+	return <PostForm onCancel={onCancel} post={post} />;
 };
 
 export default PostEditor;

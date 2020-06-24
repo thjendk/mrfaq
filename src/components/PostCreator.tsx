@@ -1,35 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { Button } from 'react-bootstrap';
 import Post from 'classes/Post.class';
-import PostForm from './PostForm';
-import { PostInput } from 'types/generated';
-import { Row, RowHeader, RowExpand } from './Post';
+import { Row } from './Post';
+import { useHistory } from 'react-router-dom';
 
 export interface PostCreatorProps {
 	post?: Post;
 }
 
 const PostCreator: React.SFC<PostCreatorProps> = () => {
-	const ref = useRef(null);
-	const [isOpen, setIsOpen] = useState(false);
-
-	const handleSubmit = async (data: PostInput) => {
-		await Post.create(data);
-		setIsOpen(false);
-	};
+	const history = useHistory();
 
 	return (
-		<Row>
-			<RowHeader style={{ textAlign: 'center' }}>
-				<Button variant="outline-secondary" block onClick={() => setIsOpen(!isOpen)}>
-					Opret nyt opslag
-				</Button>
-			</RowHeader>
-			<RowExpand ref={ref} style={isOpen ? { maxHeight: ref.current?.scrollHeight } : { maxHeight: 0 }}>
-				<div style={{ padding: '15px' }}>
-					<PostForm onSubmit={handleSubmit} />
-				</div>
-			</RowExpand>
+		<Row style={{ textAlign: 'center' }}>
+			<Button variant="outline-secondary" block onClick={() => history.push('/new')}>
+				Opret nyt opslag
+			</Button>
 		</Row>
 	);
 };

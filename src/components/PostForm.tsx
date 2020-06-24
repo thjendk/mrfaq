@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { PostInput } from 'types/generated';
 import { Form, Spinner, Button } from 'react-bootstrap';
 import Post from 'classes/Post.class';
+import { useHistory } from 'react-router-dom';
 
 export interface PostFormProps {
-	onSubmit: (data: PostInput) => Promise<void>;
 	post?: Post;
 	onCancel?: Function;
 }
 
-const PostForm: React.SFC<PostFormProps> = ({ onSubmit, post, onCancel }) => {
+const PostForm: React.SFC<PostFormProps> = ({ post, onCancel }) => {
+	const history = useHistory();
 	const [title, setTitle] = useState(post?.title || '');
 	const [text, setText] = useState(post?.text || '');
 	const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +17,14 @@ const PostForm: React.SFC<PostFormProps> = ({ onSubmit, post, onCancel }) => {
 	const handleSubmit = async () => {
 		try {
 			setIsLoading(true);
-			await onSubmit({ title, text });
+			if (!!post) {
+				await Post.edit(post.id, { title, text });
+				history.push(`/opslag/${post.id}`);
+				onCancel();
+			} else {
+				await Post.create({ title, text });
+				history.push('/');
+			}
 			setText('');
 			setTitle('');
 		} catch (error) {}

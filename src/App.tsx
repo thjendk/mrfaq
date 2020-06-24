@@ -11,6 +11,7 @@ import Contact from 'components/Contact';
 import AdminPage from 'components/AdminPage';
 import Footer from 'components/Footer';
 import MessageSpecific from 'components/MessageSpecific';
+import PostForm from 'components/PostForm';
 
 const Layout = styled.div`
 	display: flex;
@@ -38,6 +39,7 @@ const App: React.SFC<AppProps> = () => {
 					<Route path="/admin" component={AdminPage} />
 					<Route path="/logout" component={Logout} />
 					<Route path="/login" component={Login} />
+					<Route path="/new" component={PostForm} />
 					<Route path="/" component={Posts} />
 				</Switch>
 			</Layout>
